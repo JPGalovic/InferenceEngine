@@ -17,6 +17,7 @@ public:
 	const TruthColoumn& getColoumn(string aTitle);
 
 	bool getTruth(string aTitle, size_t aIndex);
+	bool hasColoumn(string aTitle);
 
 	// Setters
 	void addColoumn(const TruthColoumn & aColoumn);

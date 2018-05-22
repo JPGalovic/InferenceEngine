@@ -147,8 +147,10 @@ TruthStatement::TruthStatement(string aStatement)
 	lLookup.add("\/");
 	lLookup.add("~");
 
+	std::string::iterator lEnd_Pos = std::remove(aStatement.begin(), aStatement.end(), ' ');
+	aStatement.erase(lEnd_Pos, aStatement.end());
+
 	fStatement = aStatement;
-	fStatement.erase(remove_if(fStatement.begin(), fStatement.end(), isspace));
 
 	// Check for Parenthesis
 	// Check for Brackets
@@ -556,7 +558,7 @@ List<TruthStatement> TruthStatement::getSubStatements() const
 		}
 	}
 
-	if (fOperand != TruthRunner::LITERAL)
+	if (fOperand != TruthRunner::LITERAL && fOperand != TruthRunner::NONE)
 		lResult.add(*this);
 
 	return lResult;
@@ -596,18 +598,40 @@ TruthTable TruthStatement::getTruthTable()
 
 	// calculate the remaining truths from ruleset.
 	List<TruthStatement> lRules = getSubStatements();
+	lRules.add(*this); // Add self to rules, as getSubStatements() phases out base rules.
 	for (int k = 0; k < lRules.size(); k++) // for each rule
 	{
-		TruthColoumn lTruth(lRules[k].getFullStatement());
-		TruthStatement lTestRunner(lRules[k].getFullStatement());
 
-		for (int i = 0; i < lM; i++) // for each truth
+		string lStatement = lRules[k].getFullStatement();
+		std::string::iterator lEnd_Pos = std::remove(lStatement.begin(), lStatement.end(), ' ');
+		lStatement.erase(lEnd_Pos, lStatement.end());
+
+		if (lRules[k].fOperand == TruthRunner::PARENTHESIS) // remove opening and closing parenthesis from statment.
 		{
-			for (int j = 0; j < lLiterals.count(); j++) // fore each literal
-				lTestRunner.setTruth(lLiterals[j], lResult.getTruth(lLiterals[j], i));
-			lTruth.addTruth(lTestRunner.run());
+			lStatement.erase(lStatement.begin(), lStatement.begin() + 1);
+			lStatement.erase(lStatement.end() - 1, lStatement.end());
 		}
-		lResult.addColoumn(lTruth);
+
+		// check if duplicate rule in truthtable
+		if (!lResult.hasColoumn(lStatement))
+		{
+			TruthColoumn lTruth(lStatement);
+			TruthStatement lTestRunner(lStatement);
+
+			if (lRules[k].getOperand() == TruthRunner::NEGATION)
+			{
+				TruthStatement lTestRunner("~ " + lStatement);
+				TruthColoumn lTruth("~" + lStatement);
+			}
+
+			for (int i = 0; i < lM; i++) // for each truth
+			{
+				for (int j = 0; j < lLiterals.count(); j++) // fore each literal
+					lTestRunner.setTruth(lLiterals[j], lResult.getTruth(lLiterals[j], i));
+				lTruth.addTruth(lTestRunner.run());
+			}
+			lResult.addColoumn(lTruth);
+		}
 	}
 
 	return lResult;

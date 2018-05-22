@@ -51,6 +51,19 @@ bool TruthTable::getTruth(string aTitle, size_t aIndex)
 	}
 }
 
+bool TruthTable::hasColoumn(string aTitle)
+{
+	try
+	{
+		getColoumn(aTitle);
+		return true;
+	}
+	catch (const std::runtime_error& e)
+	{
+		return false;
+	}
+}
+
 void TruthTable::addColoumn(const TruthColoumn & aColoumn)
 {
 	fTable.add(aColoumn);

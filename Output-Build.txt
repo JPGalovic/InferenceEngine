@@ -1,0 +1,25 @@
+﻿1>------ Build started: Project: InderenceEngine, Configuration: Debug x64 ------
+1>TruthStatement.cpp
+1>b:\cppscratch\inderenceengine\inderenceengine\truthrunner.h(16): warning C4091: 'static ': ignored on left of 'TruthRunner::Symbol' when no variable is declared
+1>b:\cppscratch\inderenceengine\inderenceengine\truthrunner.h(23): warning C4091: 'static ': ignored on left of 'TruthRunner' when no variable is declared
+1>b:\cppscratch\inderenceengine\inderenceengine\truthstatement.cpp(136): warning C4129: '/': unrecognized character escape sequence
+1>b:\cppscratch\inderenceengine\inderenceengine\truthstatement.cpp(142): warning C4129: '/': unrecognized character escape sequence
+1>b:\cppscratch\inderenceengine\inderenceengine\truthstatement.cpp(147): warning C4129: '/': unrecognized character escape sequence
+1>b:\cppscratch\inderenceengine\inderenceengine\truthstatement.cpp(574): warning C4244: 'initializing': conversion from 'double' to '::size_t', possible loss of data
+1>b:\cppscratch\inderenceengine\inderenceengine\truthstatement.cpp(591): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+1>b:\cppscratch\inderenceengine\inderenceengine\truthstatement.cpp(593): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+1>b:\cppscratch\customcpp\containers\dictionary.h(92): warning C4101: 'e': unreferenced local variable
+1>b:\cppscratch\customcpp\containers\dictionary.h(86): note: while compiling class template member function 'bool Container::Dictionary<std::string,TruthRunner::Symbol>::hasKey(const K &) const'
+1>        with
+1>        [
+1>            K=std::string
+1>        ]
+1>b:\cppscratch\inderenceengine\inderenceengine\truthstatement.cpp(304): note: see reference to function template instantiation 'bool Container::Dictionary<std::string,TruthRunner::Symbol>::hasKey(const K &) const' being compiled
+1>        with
+1>        [
+1>            K=std::string
+1>        ]
+1>b:\cppscratch\inderenceengine\inderenceengine\truthstatement.cpp(129): note: see reference to class template instantiation 'Container::Dictionary<std::string,TruthRunner::Symbol>' being compiled
+1>InderenceEngine.vcxproj -> B:\CPPScratch\InderenceEngine\x64\Debug\InderenceEngine.exe
+1>Done building project "InderenceEngine.vcxproj".
+========== Build: 1 succeeded, 0 failed, 0 up-to-date, 0 skipped ==========

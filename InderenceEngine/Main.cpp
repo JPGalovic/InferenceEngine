@@ -14,7 +14,7 @@ int main(int argc, char** argv)
 	List<string> lList;
 
 	string lTest = "(a<=>(c=>~d))&b&(b=>a)";
-	//string lTest = "a=>b";
+	//string lTest = "a<=>(c=>~d)";
 
 	TruthStatement lStatment(lTest);
 
