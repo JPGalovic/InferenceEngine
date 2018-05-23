@@ -1,35 +1,69 @@
-# CustomCPP
-Custom data types and engine elements for C++ programming.
+Inference Engine
+J.P. Galovic 6819710
 
-Developed using knowlege and code developed in Bachelor of Computer Science (BA-CS), undertaken at Swinburne University of Technology.
+Features:
+Program implements Phaser that reads a file that is in the form:
 
-## Version Tracking
-### Semantic Numbering.
-Each type and library developed in this package has its version tracked semantically. the version tracking should follow the outline of Semantic Versioning 2.0.0, found [here](https://semver.org/).
-file versions are denoted in the file header, @version    v MAJOR . MINOR . PATCH, and where applicable is marked with a build version tag following a dash (-).
+TELL
+statements; separated; by; semicolons;
+ASK
+query
 
-MAJOR version number denotes major usually fully incompatable API changes.
-MINOR version number denotes added functionality that is backwars compatible.
-PATCH version number denotes changes, fixes and improvements made to existing code, without added functionality.
+Phaser can read the following statement types:
+implication, equivalence, conjunction, disjunction, negation and literals.
+'=>'       , '<=>'      , '&'        , '\/'       , '~'        , x (any other char).
+Phaser ignores spaces ' '.
 
-Build version tags can include -ALPHA, -BETA, -RC or independant SHADOW releases usually donoted with the year and week number, eg. -18W21.
-Order of release, SHADOW > ALPHA > BETA > RC > X.Y.Z.
+Phaser produces knowledge base with functions for producing truth tables.
+Truth Tables are built on standard rules:
+┌───┬───┬────────┬─────────┬───────┬────────┬────┐
+│ A │ B │ A => B │ A <=> B │ A & B │ A \/ B │ ~B │
+├───┼───┼────────┼─────────┼───────┼────────┼────┤
+│ T │ T │ T      │ T       │ T     │ T      │ F  │
+│ T │ F │ F      │ F       │ F     │ T      │ T  │
+│ F │ T │ T      │ F       │ F     │ T      │    │
+│ F │ F │ T      │ T       │ F     │ F      │    │
+└───┴───┴────────┴─────────┴───────┴────────┴────┘
 
-### Change Log.
-Change logs are kept for each inderviual type and library, changes should be written in an unordered list format, kept in indervidual fies for each specified type and library.
+Agent contains three algorithms that can be called:
+TT : Truth Table Lookup, determines if rule exists for query, then prints number of true elements in found rule.
+FC : Chains forward from defined literals, showing steps until query is found.
+BC : Chains backward from query, showing all literals that lead to query.
 
-### File Headers
-Each file contains a header that has information about file authors, verions (where applicable) and date.
-File authors are denoted by a list of contributors to a file following the @author tag.
-File versions are denoted, where applicable as described above, following the @version tag.
-File date information in the header is denoted in the format \[MONTH\]\[YEAR\] following the @date tag. this contains an indication of the month and year the file was last edited.
-Each function/method contained within a file is indervidually dated using full DD\\MM\\YYYY format following the @date tag.
+Test cases:
+Two main KBs were used in testing, the assignment provided KB:
 
-## Package Contents
-### Avalible Types
-* Doubly Linked List
-* Dynamic Stack
-* Dynamic Queue
-* N-Tree
-* Dictionary
-### Custom Libraries
+p2 => p3; p3 => p1; c => e; b & e => f; f & g => h; p1 => d; p1 & p3 => c; a; b; p2;
+
+and an aditional KB containing more complex statements:
+
+a => b; a <=> c; c \/ b ; ~a & b => d; a => b => c; a; b;
+
+in both cases, the rules were checked against hand written truth tables to determine code validity.
+
+Acknowledgments / Resources:
+
+to develop this program I used previously developed C++ templates and classes (done by myself in other units)
+
+https://en.wikipedia.org/wiki/List_of_logic_symbols
+used to aid development of truth table definitions (listed above)
+
+Notes:
+before the selected algorithm is run, a series of truth tables for each statement will be shown.
+press any key to continue to Agent execution.
+
+the program (.exe) requires two arguments be set, firstly the dir address for the file to be read, and the selected algorithm, TT, FC or BC. errors will be displayed then upon exit one of the following will be returned:
+
+Code : Description
+0    : Program exited on success (meaning no errors encounter)
+1    : Program exited on error, Incorrect number of argument set, usage: <FILENAME> <TT|FC|BC METHOD>
+2    : Program exited on error, Method not in accepted format, usage: Truth Table (TT), Forward Chaining (FC) and Backward Chaining (BC).
+3    : Program exited on error, File cannot be opened or file not found.
+4    : Program exited on unknown error.
+1000 : Runtime Error, see error text displayed
+1001 : KB does not contain literal with name used in query.
+
+Summary Report:
+All work done in this assignment was done by James P. Galovic, J.P. Galovic, 6819710
+Intro to AI COS30019.
+Source code: https://github.com/JPGalovicSoftware/inference_engine

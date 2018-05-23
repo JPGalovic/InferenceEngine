@@ -39,6 +39,9 @@
     <ClCompile Include="TruthStatementIterator.cpp">
       <Filter>Source Files\Truths</Filter>
     </ClCompile>
+    <ClCompile Include="Agent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TruthRunner.h">
@@ -55,6 +58,9 @@
     </ClInclude>
     <ClInclude Include="TruthStatementIterator.h">
       <Filter>Header Files\Truths</Filter>
+    </ClInclude>
+    <ClInclude Include="Agent.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
