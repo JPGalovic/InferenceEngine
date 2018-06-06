@@ -25,7 +25,10 @@ TruthStatement::TruthStatement(string aStatement, TruthRunner::Symbol lTruthType
 
 	// Set child for parenthesis, negation
 	if (lTruthType == TruthRunner::PARENTHESIS || lTruthType == TruthRunner::NEGATION)
+	{
 		fChild = new TruthStatement(aStatement);
+		fChild->fParent = this;
+	}
 }
 
 const List<string> TruthStatement::sort(List<Pair<size_t, string>>& aList)
@@ -94,6 +97,7 @@ void TruthStatement::init()
 	fLeft = &NIL;
 	fRight = &NIL;
 	fChild = &NIL;
+	fParent = &NIL;
 
 	fOperand = TruthRunner::NONE;
 
@@ -332,16 +336,18 @@ TruthStatement::TruthStatement(string aStatement)
 	for (int i = 0; i < lFinalStatements.count() - 1; i++)
 		lSegments[i]->setRight(*lSegments[i + 1]);
 
-	bool fSet = false;
+	bool lSet = false;
 	for (int i = 0; i < lFinalStatements.count(); i++)
 		if (lSegments[i]->fOperand != TruthRunner::LITERAL && lSegments[i]->fOperand != TruthRunner::PARENTHESIS && lSegments[i]->fOperand != TruthRunner::NONE)
 		{
 			fChild = lSegments[i];
-			fSet = true;
+			lSet = true;
 			break;
 		}
-	if (!fSet)
+	if (!lSet)
 		fChild = lSegments[0];
+	fChild->fParent = this;
+		
 }
 
 bool TruthStatement::run()
@@ -384,6 +390,11 @@ const TruthStatement & TruthStatement::getRight() const
 const TruthStatement & TruthStatement::getChild() const
 {
 	return *fChild;
+}
+
+const TruthStatement & TruthStatement::getParent() const
+{
+	return *fParent;
 }
 
 string TruthStatement::getStatement() const
@@ -493,6 +504,11 @@ bool TruthStatement::hasRight() const
 bool TruthStatement::hasChild() const
 {
 	return fChild != &NIL;
+}
+
+bool TruthStatement::hasParent() const
+{
+	return fParent != &NIL;
 }
 
 const TruthRunner::Symbol & TruthStatement::getOperand() const
@@ -688,6 +704,13 @@ void TruthStatement::setRight(TruthStatement & aOther)
 void TruthStatement::setChild(TruthStatement & aOther)
 {
 	fChild = &aOther;
+	aOther.fParent = this;
+}
+
+void TruthStatement::setParent(TruthStatement & aOther)
+{
+	fParent = &aOther;
+	aOther.fChild = this;
 }
 
 void TruthStatement::print() const

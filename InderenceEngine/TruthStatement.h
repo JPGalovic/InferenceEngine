@@ -20,6 +20,7 @@ private:
 	TruthStatement* fLeft;
 	TruthStatement* fRight;
 	TruthStatement* fChild;
+	TruthStatement* fParent;
 
 	TruthRunner::Symbol fOperand;
 
@@ -50,6 +51,7 @@ public:
 	const TruthStatement & getLeft() const;
 	const TruthStatement & getRight() const;
 	const TruthStatement & getChild() const;
+	const TruthStatement & getParent() const;
 
 	string getStatement() const;
 	string getFullStatement() const;
@@ -60,6 +62,7 @@ public:
 	bool hasLeft() const;
 	bool hasRight() const;
 	bool hasChild() const;
+	bool hasParent() const;
 
 	const TruthRunner::Symbol& getOperand() const;
 
@@ -73,6 +76,7 @@ public:
 	void setLeft(TruthStatement & aOther);
 	void setRight(TruthStatement & aOther);
 	void setChild(TruthStatement & aOther);
+	void setParent(TruthStatement & aOther);
 
 	// Printers
 	void print() const;

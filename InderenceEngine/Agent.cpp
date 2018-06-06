@@ -37,8 +37,18 @@ int Agent::TT()
 	try
 	{
 		List<std::string> lLiterals = getLiterals();
-		// Check if queiry is in literals?
+		// Print Truth Tables
+		for (int i = 0; i < fStatements.size(); i++)
+		{
+			TruthStatement lStatement = fStatements[i];
+			lStatement.printTruthTable();
+			cout << endl;
+		}
 
+		system("PAUSE");
+		system("CLS");
+
+		// Check if queiry is in literals?
 		std::string lOutput;
 
 		if (lLiterals.contains(fQuery))
